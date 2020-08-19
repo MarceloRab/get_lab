@@ -31,6 +31,8 @@ dependencies:
   get: ^3.4.6
   dio: ^3.0.10
   faker: ^1.2.1
+  connectivity: ^0.4.9
+  #rxdart: ^0.24.1
 
 dev_dependencies:
   flutter_test:

@@ -16,6 +16,7 @@ class HomeController extends GetxController {
 
   List<Faker> get fakerList => _fakerList.value;
 
+  // método para adicionar ao fluxo
   set fakerList(value) => _fakerList.value = value;
 
   ///função para recuperar todos os posts

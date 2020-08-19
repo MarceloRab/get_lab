@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:get_lab/app/controller/connecty_bloc.dart';
 
 import 'app/controller/home_controller.dart';
 import 'app/data/repository/home_repository.dart';
@@ -29,7 +30,12 @@ class MyApp extends StatelessWidget {
 
   void globalInjections() {
     Get.lazyPut<HomeController>(
-        () => HomeController(repository: HomeRepository()),);
-        //tag: 'teste');
+      () => HomeController(repository: HomeRepository()),
+    );
+    //tag: 'teste');
+
+    Get.lazyPut<ConnectyBloc>(
+      () => ConnectyBloc(),
+    );
   }
 }

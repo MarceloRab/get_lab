@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:get_lab/app/controller/home_controller.dart';
 import 'package:get_lab/app/routes/app_route.dart';
+import 'package:get_lab/app/ui/theme/commun/connecty_widget.dart';
 
 class HomePage extends GetView<HomeController> {
 //repository and controller  injection bindings
@@ -9,7 +10,16 @@ class HomePage extends GetView<HomeController> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(title: Text('HomePage')),
+      appBar: AppBar(
+        title: Text('HomePage'),
+        actions: [
+          const ConnectyWidget(
+            // color: Colors.white,
+            connectywidgetTipo: ConnectywidgetTipo.icone,
+            textMensagem: ' Verifique internet. ',
+          ),
+        ],
+      ),
       body: Obx(() {
         //return controller.fakerList.length < 1
         return controller.fakerList == null
