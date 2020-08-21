@@ -1,6 +1,6 @@
 import 'package:get/get.dart';
 
-abstract class Searcher {
+abstract class Searcher<T> {
   RxBool isModSearch;
 
   RxString search;
@@ -8,4 +8,6 @@ abstract class Searcher {
   set procure(String text);
 
   void setModSearch(bool value);
+
+  List<T> get initialList;
 }

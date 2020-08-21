@@ -129,19 +129,36 @@ class _SearchAppBarState extends State<SearchAppBar>
     });
   }
 
-  AppBar _buildAppBar(BuildContext context) {
+  Widget _buildAppBar(BuildContext context) {
     final searchButton = _buildSearchButton(context);
     final increasedActions = <Widget>[];
     increasedActions.addAll(widget.actions);
     increasedActions.insert(widget._searchButtonPosition, searchButton);
-    return AppBar(
-      backgroundColor: widget.backgroundColor ?? Theme.of(context).primaryColor,
-      iconTheme: widget.iconTheme ?? Theme.of(context).iconTheme,
-      title: widget.title,
-      elevation: _elevation,
-      centerTitle: widget.centerTitle,
-      actions: increasedActions,
-    );
+    final removeSeacher = <Widget>[];
+    removeSeacher.addAll(widget.actions);
+    return Obx(() {
+      if (widget.controller.initialList != null)
+        return AppBar(
+          backgroundColor:
+              widget.backgroundColor ?? Theme.of(context).primaryColor,
+          iconTheme: widget.iconTheme ?? Theme.of(context).iconTheme,
+          title: widget.title,
+          elevation: _elevation,
+          centerTitle: widget.centerTitle,
+          actions: increasedActions,
+        );
+      else {
+        return AppBar(
+          backgroundColor:
+              widget.backgroundColor ?? Theme.of(context).primaryColor,
+          iconTheme: widget.iconTheme ?? Theme.of(context).iconTheme,
+          title: widget.title,
+          elevation: _elevation,
+          centerTitle: widget.centerTitle,
+          actions: removeSeacher,
+        );
+      }
+    });
   }
 
   Widget _buildSearchButton(BuildContext context) {

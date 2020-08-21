@@ -8,7 +8,7 @@ import 'package:meta/meta.dart';
 import 'package:rxdart/rxdart.dart';
 import 'package:get/get.dart';
 
-class HomeSearchController extends GetxController implements Searcher {
+class HomeSearchController extends GetxController implements Searcher<Faker> {
   //repository required
   final HomeRepository repository;
 
@@ -20,7 +20,10 @@ class HomeSearchController extends GetxController implements Searcher {
   final RxList<Faker> _fakerList = RxList<Faker>();
   final RxList<Faker> _fakerListFilted = <Faker>[].obs;
 
-  List<Faker> get fakerList => _fakerList.value;
+  //List<Faker> get fakerList => _fakerList.value;
+
+  @override
+  List<Faker> get initialList => _fakerList.value;
 
   // método para adicionar ao fluxo
   set fakerList(value) => _fakerList.value = value;
@@ -43,7 +46,7 @@ class HomeSearchController extends GetxController implements Searcher {
         .distinct()
         .debounceTime(Duration(milliseconds: 350))
         .listen((event) {
-      if (fakerList != null) _filteredFakers();
+      _filteredFakers();
     });
 
     repository.getAll().then((data) {
@@ -57,10 +60,10 @@ class HomeSearchController extends GetxController implements Searcher {
 
   void _filteredFakers() {
     if (search.value.isEmpty) {
-      _fakerListFilted.assignAll(fakerList);
+      _fakerListFilted.assignAll(initialList);
       //filteredProducts.addAll(fakerList);
     } else {
-      _fakerListFilted.assignAll(fakerList.where((p) =>
+      _fakerListFilted.assignAll(initialList.where((p) =>
           removeDiacritics(p.person.firstName().toLowerCase())
               .contains(removeDiacritics(search.value.toLowerCase()))));
       //filteredProducts
@@ -76,12 +79,7 @@ class HomeSearchController extends GetxController implements Searcher {
 
   @override
   set procure(String text) {
-    if (fakerList != null) {
-      search.value = text;
-    } else {
-      search.value = '';
-      search.update((value) {});
-    }
+    search.value = text;
 
     // remontar no debounci
   }

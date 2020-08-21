@@ -42,7 +42,7 @@ class HomePage extends GetView<HomeSearchController> {
       ),*/
       body: Obx(() {
         List<Faker> _listFilter = [];
-        final bool withoutList = controller.fakerList == null;
+        final bool withoutList = controller.initialList == null;
 
         if (!withoutList) _listFilter = controller.fakerListFilted;
         //return controller.fakerList.length < 1
@@ -95,18 +95,18 @@ class HomePageGetX extends GetView<HomeSearchController> {
             initState: (state) {
           Get.find<HomeSearchController>().getAll();
         }, builder: (_) {
-          return _.fakerList.length < 1
+          return _.initialList.length < 1
               ? Center(
                   child: CircularProgressIndicator(),
                 )
               : ListView.builder(
                   itemBuilder: (context, index) {
                     return ListTile(
-                      title: Text(_.fakerList[index].person.name()),
-                      subtitle: Text(_.fakerList[index].person.lastName()),
+                      title: Text(_.initialList[index].person.name()),
+                      subtitle: Text(_.initialList[index].person.lastName()),
                     );
                   },
-                  itemCount: _.fakerList.length,
+                  itemCount: _.initialList.length,
                 );
         }),
       ),
@@ -129,18 +129,18 @@ class HomePageBuilder extends GetView<HomeSearchController> {
             Get.find<HomeSearchController>().getAll();
           },
           builder: (_) {
-            return _.fakerList.length < 1
+            return _.initialList.length < 1
                 ? Center(
                     child: CircularProgressIndicator(),
                   )
                 : ListView.builder(
                     itemBuilder: (context, index) {
                       return ListTile(
-                        title: Text(_.fakerList[index].person.name()),
-                        subtitle: Text(_.fakerList[index].person.lastName()),
+                        title: Text(_.initialList[index].person.name()),
+                        subtitle: Text(_.initialList[index].person.lastName()),
                       );
                     },
-                    itemCount: _.fakerList.length,
+                    itemCount: _.initialList.length,
                   );
           },
           didChangeDependencies: (state) {},

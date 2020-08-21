@@ -17,7 +17,7 @@ class TestePage extends GetView<HomeSearchController> {
               Get.find<HomeSearchController>().getAll();
             },
             builder: (testeRepository) {
-              return controller.fakerList.length < 1
+              return controller.initialList.length < 1
                   ? Center(
                       child: CircularProgressIndicator(),
                     )
@@ -25,13 +25,13 @@ class TestePage extends GetView<HomeSearchController> {
                       itemBuilder: (context, index) {
                         return ListTile(
                           title:
-                              Text(controller.fakerList[index].person.name()),
+                              Text(controller.initialList[index].person.name()),
                           subtitle: GestureDetector(
                               onTap: () {
                                 testeRepository.testeSink.add(1);
 
                               },
-                              child: Text(controller.fakerList[index].person
+                              child: Text(controller.initialList[index].person
                                   .lastName())),
                           trailing: StreamBuilder<int>(
                             stream: testeRepository.testeStream,
@@ -59,7 +59,7 @@ class TestePage extends GetView<HomeSearchController> {
                           }),
                         );
                       },
-                      itemCount: controller.fakerList.length,
+                      itemCount: controller.initialList.length,
                     );
             }),
       ),

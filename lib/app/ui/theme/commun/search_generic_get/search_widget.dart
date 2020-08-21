@@ -70,30 +70,28 @@ class SearchWidget extends StatelessWidget implements PreferredSizeWidget {
   }
 
   Widget _buildTextField() {
-    final TextEditingController textController = TextEditingController();
+    final TextEditingController textController = _getController();
 
     // dentro de uma lista vazi caso procura numa lista ainda vazia
-    return Obx(() {
-      return TextField(
-        controller: _getController(textController),
-        //textAlign: TextAlign.left,
-        autofocus: true,
-        decoration: InputDecoration(
-          border: InputBorder.none,
-          contentPadding: const EdgeInsets.only(top: 12.0),
-          hintText: hintText,
-        ),
-        textCapitalization: textCapitalization ?? TextCapitalization.none,
-        style: const TextStyle(fontSize: 18.0),
-        onChanged: (text) {
-          controller.procure = text;
-        },
-      );
-    });
+    return TextField(
+      controller: textController,
+      //textAlign: TextAlign.left,
+      autofocus: true,
+      decoration: InputDecoration(
+        border: InputBorder.none,
+        contentPadding: const EdgeInsets.only(top: 12.0),
+        hintText: hintText,
+      ),
+      textCapitalization: textCapitalization ?? TextCapitalization.none,
+      style: const TextStyle(fontSize: 18.0),
+      onChanged: (text) {
+        controller.procure = text;
+      },
+    );
   }
 
-  TextEditingController _getController(TextEditingController textController) {
-    //final TextEditingController textController = TextEditingController();
+  TextEditingController _getController() {
+    final TextEditingController textController = TextEditingController();
 
     textController.value =
         TextEditingValue(text: controller.search.value ?? '');
