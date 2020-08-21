@@ -3,7 +3,7 @@ import 'package:get/get.dart';
 import 'package:get_lab/app/controller/home_controller.dart';
 import 'package:get_lab/app/data/repository/teste_repository_disposable.dart';
 
-class TestePage extends GetView<HomeController> {
+class TestePage extends GetView<HomeSearchController> {
 //repository and controller  injection bindings
 
   @override
@@ -14,7 +14,7 @@ class TestePage extends GetView<HomeController> {
         child: GetX<TesteDisposable>(
             init: TesteDisposable(),
             initState: (state) {
-              Get.find<HomeController>().getAll();
+              Get.find<HomeSearchController>().getAll();
             },
             builder: (testeRepository) {
               return controller.fakerList.length < 1

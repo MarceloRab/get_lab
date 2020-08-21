@@ -29,8 +29,8 @@ class MyApp extends StatelessWidget {
   }
 
   void globalInjections() {
-    Get.lazyPut<HomeController>(
-      () => HomeController(repository: HomeRepository()),
+    Get.lazyPut<HomeSearchController>(
+      () => HomeSearchController(repository: HomeRepository()),
     );
     //tag: 'teste');
 

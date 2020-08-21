@@ -7,7 +7,7 @@ class HomeRepository {
   //HomeRepository({@required this.apiClient}) : assert(apiClient != null);
 
   Future<List<Faker>> getAll() async {
-    await Future.delayed(const Duration(seconds: 3));
+    await Future.delayed(const Duration(seconds: 15));
 
     List<Faker> fakers = [];
     for (var i = 0; i < 5; ++i) {

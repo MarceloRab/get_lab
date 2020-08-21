@@ -1,16 +1,36 @@
+import 'package:faker/faker.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:get_lab/app/controller/home_controller.dart';
 import 'package:get_lab/app/routes/app_route.dart';
 import 'package:get_lab/app/ui/theme/commun/connecty_widget.dart';
+import 'package:get_lab/app/ui/theme/commun/search_generic_get/search_app_bar.dart';
 
-class HomePage extends GetView<HomeController> {
+class HomePage extends GetView<HomeSearchController> {
 //repository and controller  injection bindings
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(
+      appBar: SearchAppBar(
+        searchButtonPosition: 1,
+        controller: controller,
+        elevation: 0.0,
+        searchElementsColor: Colors.black,
+        centerTitle: true,
+        iconTheme: Theme.of(context).iconTheme.copyWith(color: Colors.white),
+        hintText: 'Pesquise produto',
+        title: const Text('HomePage '),
+        actions: <Widget>[
+          const ConnectyWidget(
+            //color: MyThemeApp.background,
+            connectywidgetTipo: ConnectywidgetTipo.icone,
+            textMensagem: 'Necessário conexāo.',
+          ),
+        ],
+      ),
+
+      /*AppBar(
         title: Text('HomePage'),
         actions: [
           const ConnectyWidget(
@@ -19,10 +39,14 @@ class HomePage extends GetView<HomeController> {
             textMensagem: ' Verifique internet. ',
           ),
         ],
-      ),
+      ),*/
       body: Obx(() {
+        List<Faker> _listFilter = [];
+        final bool withoutList = controller.fakerList == null;
+
+        if (!withoutList) _listFilter = controller.fakerListFilted;
         //return controller.fakerList.length < 1
-        return controller.fakerList == null
+        return withoutList
             ? Center(
                 child: CircularProgressIndicator(),
               )
@@ -33,16 +57,15 @@ class HomePage extends GetView<HomeController> {
                         onTap: () {
                           controller.refazTela();
                         },
-                        child: Text(controller.fakerList[index].person.name())),
+                        child: Text(_listFilter[index].person.name())),
                     subtitle: GestureDetector(
                         onTap: () {
                           Get.toNamed(Routes.TESTE);
                         },
-                        child: Text(
-                            controller.fakerList[index].person.lastName())),
+                        child: Text(_listFilter[index].person.lastName())),
                   );
                 },
-                itemCount: controller.fakerList.length,
+                itemCount: _listFilter.length,
               );
       }),
       floatingActionButton: FloatingActionButton(
@@ -59,7 +82,7 @@ class HomePage extends GetView<HomeController> {
   }
 }
 
-class HomePageGetX extends GetView<HomeController> {
+class HomePageGetX extends GetView<HomeSearchController> {
 //repository and controller  injection bindings
 
   @override
@@ -67,10 +90,10 @@ class HomePageGetX extends GetView<HomeController> {
     return Scaffold(
       appBar: AppBar(title: Text('HomePage')),
       body: Container(
-        child: GetX<HomeController>(
+        child: GetX<HomeSearchController>(
             //init: HomeController(repository: HomeRepository()),
             initState: (state) {
-          Get.find<HomeController>().getAll();
+          Get.find<HomeSearchController>().getAll();
         }, builder: (_) {
           return _.fakerList.length < 1
               ? Center(
@@ -91,19 +114,19 @@ class HomePageGetX extends GetView<HomeController> {
   }
 }
 
-class HomePageBuilder extends GetView<HomeController> {
+class HomePageBuilder extends GetView<HomeSearchController> {
 //repository and controller  injection bindings
 
-  final HomeController controller_2 = Get.find<HomeController>();
+  final HomeSearchController controller_2 = Get.find<HomeSearchController>();
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(title: Text('HomePage')),
       body: Container(
-        child: GetBuilder<HomeController>(
+        child: GetBuilder<HomeSearchController>(
           initState: (state) {
-            Get.find<HomeController>().getAll();
+            Get.find<HomeSearchController>().getAll();
           },
           builder: (_) {
             return _.fakerList.length < 1
